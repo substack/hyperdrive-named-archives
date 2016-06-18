@@ -17,8 +17,8 @@ Named.prototype.createArchive = function (name) {
   var archive = deferred()
   self.db.get(name, function (err, link) {
     if (err && !notfound(err)) return archive.emit('error', err)
-    if (link) return self.drive.createArchive(link)
-    var a = self.drive.createArchive({ live: true })
+    var a = self.drive.createArchive(link, { live: true })
+    if (link) return archive.setArchive(a)
     self.db.put(name, a.key, function (err) {
       if (err) archive.emit('error', err)
       else archive.setArchive(a)

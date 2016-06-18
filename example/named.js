@@ -22,7 +22,7 @@ if (process.argv[2] === 'write') {
 } else if (process.argv[2] === 'archives') {
   named.list(function (err, names) {
     names.forEach(function (x) {
-      console.log(x.name, x.link)
+      console.log(x.name, x.link.toString('hex'))
     })
   })
 }
