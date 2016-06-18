@@ -10,7 +10,9 @@
   "scripts": {
     "test": "tape test/*.js"
   },
-  "keywords": [],
+  "keywords": [
+    "hyperdrive"
+  ],
   "author": "substack",
   "license": "BSD",
   "devDependencies": {
@@ -28,5 +30,13 @@
     "inherits": "^2.0.1",
     "levelup-defaults": "^2.0.0",
     "through2": "^2.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/substack/hyperdrive-named-archives.git"
+  },
+  "bugs": {
+    "url": "https://github.com/substack/hyperdrive-named-archives/issues"
+  },
+  "homepage": "https://github.com/substack/hyperdrive-named-archives#readme"
 }
