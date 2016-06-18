@@ -1,16 +1,16 @@
-var namedArchives = requre('../')
+var namedArchives = require('../')
 var hyperdrive = require('hyperdrive')
 var level = require('level')
 var sub = require('subleveldown')
 
 var db = level('/tmp/drive.db')
 
-var createArchive = namedArchives({
+var named = namedArchives({
   drive: hyperdrive(sub(db, 'drive')),
   db: sub(db, 'archives')
 })
 
-var archive = createArchive('default')
+var archive = named.createArchive('default')
 if (process.argv[2] === 'write') {
   var file = process.argv[3]
   var stream = archive.createFileWriteStream(file)
@@ -19,4 +19,10 @@ if (process.argv[2] === 'write') {
   var file = process.argv[3]
   var stream = archive.createFileReadStream(file)
   stream.pipe(process.stdout)
+} else if (process.argv[2] === 'archives') {
+  named.list(function (err, names) {
+    names.forEach(function (x) {
+      console.log(x.name, x.link)
+    })
+  })
 }
