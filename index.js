@@ -5,6 +5,7 @@ var defaults = require('levelup-defaults')
 var duplexify = require('duplexify')
 var inherits = require('inherits')
 var EventEmitter = require('events').EventEmitter
+var has = require('has')
 
 module.exports = Named
 inherits(Named, EventEmitter)
@@ -14,12 +15,15 @@ function Named (opts) {
   this.drive = opts.drive
   this.db = defaults(opts.db, { valueEncoding: 'binary' })
   this._pending = 0
+  this._archives = {}
 }
 
 Named.prototype.createArchive = function (name) {
   var self = this
-  self._pending++
   var archive = deferred()
+  if (has(self._archives, name)) return self._archives[name]
+  self._archives[name] = archive
+  self._pending++
   self.db.get(name, function (err, link) {
     if (err && !notfound(err)) {
       if (--self._pending === 0) done()

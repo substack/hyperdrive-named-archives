@@ -5,7 +5,7 @@ var memdb = require('memdb')
 var concat = require('concat-stream')
 
 test('second load', function (t) {
-  t.plan(3)
+  t.plan(4)
   var named = namedArchives({
     drive: hyperdrive(memdb()),
     db: memdb()
@@ -18,14 +18,16 @@ test('second load', function (t) {
       .pipe(concat({ encoding: 'string' }, function (body) {
         t.equal(body, 'whatever')
       }))
+    named.list(onlist)
   })
-  named.list(function (err, names) {
+  function onlist (err, names) {
+    t.error(err)
     t.deepEqual(names.map(fname), ['hello'])
     var a = named.createArchive('hello')
     a.createFileReadStream('hello.txt')
       .pipe(concat({ encoding: 'string' }, function (body) {
         t.equal(body, 'whatever')
       }))
-  })
+  }
   function fname (x) { return x.name }
 })
