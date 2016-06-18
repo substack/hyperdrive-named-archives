@@ -1,7 +1,7 @@
 {
   "name": "hyperdrive-named-archives",
   "version": "1.0.0",
-  "description": "create a new archive the first time and automatically reuse that key",
+  "description": "create hyperdrive archives that store and load link keys from names",
   "main": "index.js",
   "directories": {
     "example": "example",
