@@ -12,12 +12,12 @@ var sub = require('subleveldown')
 
 var db = level('/tmp/drive.db')
 
-var createArchive = namedArchives({
+var named = namedArchives({
   drive: hyperdrive(sub(db, 'drive')),
   db: sub(db, 'archives')
 })
 
-var archive = createArchive('default')
+var archive = named.createArchive('default')
 if (process.argv[2] === 'write') {
   var file = process.argv[3]
   var stream = archive.createFileWriteStream(file)
