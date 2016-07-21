@@ -44,6 +44,14 @@ Named.prototype.createArchive = function (name) {
   function done () { self.emit('_ready') }
 }
 
+Named.prototype.getLink = function (name, cb) {
+  var self = this
+  if (self._pending > 0) {
+    self.once('_ready', ready)
+  } else ready()
+  function ready () { self.db.get(name, cb) }
+}
+
 Named.prototype.list = function (opts, cb) {
   var self = this
   var d = duplexify()
