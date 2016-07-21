@@ -29,3 +29,41 @@ if (process.argv[2] === 'write') {
 }
 ```
 
+# api
+
+``` js
+var namedArchives = require('hyperdrive-named-archives')
+```
+
+## var named = namedArchives(opts)
+
+Create a new named archive instance `named` from:
+
+* `opts.drive` - a hyperdrive instance
+* `opts.db` - a leveldb instance to store archive links
+
+## var archive = named.createArchive(name)
+
+Create an archive from a string `name`. The first time `name` is used, the
+archive link will be saved so that subsequent calls to `createArchive()` under
+the same name will use the same stored archive link.
+
+## named.getLink(name, cb)
+
+Get the archive link for `name` as `cb(err, link)`. `name` is a string and
+`link` is a buffer from the underlying `archive.key`.
+
+## var stream = named.list(opts, cb)
+
+Return a readable object `stream` with stored `name` and `link` properties for
+each stored link.
+
+# install
+
+```
+npm install hyperdrive-named-archives
+```
+
+# license
+
+BSD
