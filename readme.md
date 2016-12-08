@@ -42,11 +42,13 @@ Create a new named archive instance `named` from:
 * `opts.drive` - a hyperdrive instance
 * `opts.db` - a leveldb instance to store archive links
 
-## var archive = named.createArchive(name)
+## var archive = named.createArchive(name, opts)
 
 Create an archive from a string `name`. The first time `name` is used, the
 archive link will be saved so that subsequent calls to `createArchive()` under
 the same name will use the same stored archive link.
+
+`opts` are passed to the underlying `drive.createArchive(opts)` method.
 
 ## named.getLink(name, cb)
 

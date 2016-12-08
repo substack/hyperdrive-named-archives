@@ -6,6 +6,7 @@ var duplexify = require('duplexify')
 var inherits = require('inherits')
 var EventEmitter = require('events').EventEmitter
 var has = require('has')
+var xtend = require('xtend')
 
 module.exports = Named
 inherits(Named, EventEmitter)
@@ -18,7 +19,7 @@ function Named (opts) {
   this._archives = {}
 }
 
-Named.prototype.createArchive = function (name) {
+Named.prototype.createArchive = function (name, opts) {
   var self = this
   var archive = deferred()
   if (has(self._archives, name)) return self._archives[name]
@@ -29,7 +30,7 @@ Named.prototype.createArchive = function (name) {
       if (--self._pending === 0) done()
       return archive.emit('error', err)
     }
-    var a = self.drive.createArchive(link, { live: true })
+    var a = self.drive.createArchive(link, xtend(opts, { live: true }))
     if (link) {
       if (--self._pending === 0) done()
       return archive.setArchive(a)
